@@ -236,10 +236,10 @@ void LoopDir(const std::string& dir_name, T func) {
     auto e = errno;
     char buf[1024];
     char* msg;
-#if defined(_GNU_SOURCE) && !defined(__APPLE__)
+#if defined(_GNU_SOURCE) && !defined(__APPLE__) && !defined (__ANDROID__)
     msg = strerror_r(e, buf, sizeof(buf));
 #else
-    // for Mac OS X
+    // for Mac OS X and Android lower than API 23
     if (strerror_r(e, buf, sizeof(buf)) != 0) {
       buf[0] = '\0';
     }
